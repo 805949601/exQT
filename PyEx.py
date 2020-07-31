@@ -48,19 +48,17 @@ class PyEx:
             sheet_row = sheet.row_values(rowx=0)#表头
             #检索有指定有该关键词的行
             liRowAccess = []#记录检索通过的数据的行数索引
-            liAccess = []#记录检索通过的数据的行数索引，与上一个列表索引相同，一一对应。
             i = 0
             for row, content in enumerate(sheet_col): #真实row要加1]
                 if row>0 and type(content) is str and (text in content):
                     liRowAccess.append(row)
-                    liAccess.append(content)
                 else:
                     continue
                 i+=1
 
             #过滤后的每行存入二维数组中，【行坐标，0开始，到最后一个数据结束】【列坐标，0开始到最后一个标题结束】
-            filter = [[' ' for i in range(len(sheet_row))] for i in range(len(liAccess))]#二维数组初始化
-            for r in range(len(liAccess)):
+            filter = [[' ' for i in range(len(sheet_row))] for i in range(len(liRowAccess))]#二维数组初始化
+            for r in range(len(liRowAccess)):
                 for c in range(len(sheet_row)):
                     filter[r][c] = sheet.row_values(rowx=liRowAccess[r])[c]
 
@@ -83,7 +81,7 @@ class PyEx:
 
 
             #写入数据
-            for r in range(len(liAccess)):
+            for r in range(len(liRowAccess)):
                 for c in range(len(sheet_row)):
                     sh.cell(r+2,c+1).value = filter[r][c]
 
@@ -141,3 +139,4 @@ app = QApplication([])
 PyEx = PyEx()
 PyEx.ui.show()
 app.exec_()
+#测试提交222211
